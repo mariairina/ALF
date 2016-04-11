@@ -1,23 +1,42 @@
-<!DOCTYPE html>
-<html>
-<body>
+start
+  = (firstAction)*
+firstAction
+   =left:secondAction " " right:pct {return left}
 
-<p>RegEx validator</p>
+secondAction
+   = left:string " = " right:additive { return left+' are valoarea de '+right }
 
-<button onclick="myFunction()">Verifier expression!</button>
+additive
+  = left:subtraction "+" right:additive { return left + right; }
+  / subtraction
 
-<p id="demo"> Elena = 3022 * 5 :-)</p>
+subtraction
+  = left:exponential "-" right:subtraction { return left - right; }
+  / exponential
 
-<script>
-function myFunction() {
-     var str = document.getElementById("demo").innerHTML;
-    if (/(((([a-z|A-Z]{4})(\s[=]\s)))(((\d{4}\s:-[)])|(\d{3}\s:-[)])|(\d{2}\s:-[)])|(\d\s:-[)]))|((\d{4}|\d{3}|\d{2}|\d)(\s[+]\s)(\d{4}|\d{3}|\d{2}|\d)(\s:-[)]))|((\d{4}|\d{3}|\d{2}|\d)(\s[-]\s)(\d{4}|\d{3}|\d{2}|\d)(\s:-[)]))|((\d{4}|\d{3}|\d{2}|\d)(\s[*]\s)(\d{4}|\d{3}|\d{2}|\d)(\s:-[)]))))/g.test(str)) 
-        {
-            document.getElementById("demo").innerHTML = "OK!";}
-   else 
-         {     document.getElementById("demo").innerHTML = "NOT_OK";}
-}
-</script>
+exponential
+  = left:division "^" right:exponential {return Math.pow(left,right)}
+  / division
 
-</body>
-</html>
+division 
+  = left:multiplicative "/" right:division {return left/right}
+  / multiplicative
+
+multiplicative
+  = left:primary "*" right:multiplicative { return left * right; }
+  / primary
+
+primary
+  = integer
+  / "(" additive:additive ")" { return additive; }
+
+integer "integer"
+  = (digits:[0-9]+) { return parseInt(digits.join(""), 10); }
+
+string "string"
+  = variable:([a-zA-Z]+) { return variable.join(""); }
+
+pct
+  = final:[$][$]"\n" { return final }
+Status API Training Shop Blog About
+© 2016 GitHub, Inc. Terms Privacy Security Contact Help
