@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<p>RegEx validator</p>
+
+<button onclick="myFunction()">Verifier expression!</button>
+
+<p id="demo"> Elena = 3022 * 5 :-)</p>
+
+<script>
+function myFunction() {
+     var str = document.getElementById("demo").innerHTML;
+    if (/(((([a-z|A-Z]{4})(\s[=]\s)))(((\d{4}\s:-[)])|(\d{3}\s:-[)])|(\d{2}\s:-[)])|(\d\s:-[)]))|((\d{4}|\d{3}|\d{2}|\d)(\s[+]\s)(\d{4}|\d{3}|\d{2}|\d)(\s:-[)]))|((\d{4}|\d{3}|\d{2}|\d)(\s[-]\s)(\d{4}|\d{3}|\d{2}|\d)(\s:-[)]))|((\d{4}|\d{3}|\d{2}|\d)(\s[*]\s)(\d{4}|\d{3}|\d{2}|\d)(\s:-[)]))))/g.test(str)) 
+        {
+            document.getElementById("demo").innerHTML = "OK!";}
+   else 
+         {     document.getElementById("demo").innerHTML = "NOT_OK";}
+}
+</script>
+
+</body>
+</html>
