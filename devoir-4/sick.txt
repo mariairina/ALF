@@ -1,0 +1,110 @@
+grammar sick;
+
+start: 
+	(vardeclar)? (ifclauses)? EOP
+	;
+	
+vardeclar:
+	(statement terminator)+
+;
+
+statement: 
+	variable '=' NUMBER
+	| variable '=' variable
+	| variable '=' addition
+	| variable '=' substraction
+	| variable '=' multiplication
+	| variable '=' division
+	;
+
+ifclauses:
+	(ifstatement)+
+;
+
+ifstatement:
+	'wth' condition thenbranch (elsebranch)? ifterminator
+;
+
+condition:
+	'<<' expression '>>'
+;
+
+expression:
+	primaryexp
+	| (NOT)? primaryexp LOGIC (NOT)? primaryexp
+	| NOT primaryexp
+;
+
+primaryexp:
+	(variable|NUMBER) OP (variable|NUMBER)
+;
+
+thenbranch: 'yup'
+	((statement terminator)
+	| ifstatement)
+	;
+	
+elsebranch: 'nope'
+	((statement terminator)
+	| ifstatement)
+;
+	
+addition:
+	(variable|NUMBER) '+' (variable|NUMBER)
+;
+	
+substraction:
+	(variable|NUMBER) '-' (variable|NUMBER)
+;
+	
+multiplication:
+	(variable|NUMBER) '*' (variable|NUMBER)
+;
+	
+division:
+	(variable|NUMBER) '/' (variable|NUMBER)
+;
+	
+variable:
+	ID*
+	;
+	
+terminator:
+	'<(^)';
+
+ifterminator:
+	terminator terminator;
+	
+NUMBER:
+	'-'? INT
+	| '-'? INT '.' INT
+	| ZERO
+	;
+	
+fragment INT: [0-9]+ ;
+fragment ZERO: '0' ;
+
+OP:
+	'<'
+	| '<='
+	| '>'
+	| '>='
+	| '=='
+	| '!='
+;
+
+LOGIC:
+	'&&'
+	| '||'
+;
+	
+NOT: '!'
+;
+	
+ID: 
+[a-zA-Z]
+;
+
+WS : [ \t\r\n]+ -> skip;
+
+EOP: '(\'^\')';
