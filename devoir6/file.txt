@@ -466,5 +466,4 @@ fill(0, 0, 0);
 text("Click to run! (one click per step)", 50, 75);
 textSize(12);
 table();
-Status API Training Shop Blog About
-© 2016 GitHub, Inc. Terms Privacy Security Contact HelpE
+
